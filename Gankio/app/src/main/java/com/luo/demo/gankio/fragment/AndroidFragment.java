@@ -17,7 +17,6 @@ import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
 import com.luo.demo.gankio.base.BaseFragment;
 import com.luo.demo.gankio.bean.Android;
-import com.luo.demo.gankio.util.Log;
 
 /**
  * 包名:  com.luo.demo.gankio.fragment
