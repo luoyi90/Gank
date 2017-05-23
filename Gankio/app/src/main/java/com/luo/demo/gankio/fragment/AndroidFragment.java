@@ -55,12 +55,9 @@ public class AndroidFragment extends BaseFragment {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("size : " + bean.getResults().size());
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
                             mRecyclerView.setLayoutManager(layoutManager);
-                            //设置垂直滚动，也可以设置横向滚动
                             mRecyclerView.setAdapter(new AndroidRvAdapter(mContext, bean));
                         }
                     });
