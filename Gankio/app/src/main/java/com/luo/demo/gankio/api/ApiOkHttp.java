@@ -1,5 +1,7 @@
 package com.luo.demo.gankio.api;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.luo.demo.gankio.Constants;
 import com.luo.demo.gankio.bean.Android;
@@ -30,17 +32,16 @@ public class ApiOkHttp implements IApi {
 
         Request.Builder requestBuilder = new Request.Builder().url(Constants.Android + count + "/" + pager);
         Request request = requestBuilder.build();
-        Call mcall = mOkHttpClient.newCall(request);
+        Call mCall = mOkHttpClient.newCall(request);
 
-        mcall.enqueue(new Callback() {
+        mCall.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                c.onFinish(false, null, e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                // Log.d("response : " + response.body().string());
+            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
                 String str = response.body().string();
                 Android bean = new Gson().fromJson(str, Android.class);
                 c.onFinish(true, bean, str);

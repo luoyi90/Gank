@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,18 +50,23 @@ public class AndroidFragment extends BaseFragment {
         Api.getInstance().getAndroid(10, 1, new CallBack<Android>() {
             @Override
             public void onFinish(boolean isSuccess, final Android bean, final String error) {
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("size : " + bean.getResults().size());
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-                        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-                        mRecyclerView.setLayoutManager(layoutManager);
-                        //设置垂直滚动，也可以设置横向滚动
-                        mRecyclerView.setAdapter(new AndroidRvAdapter(mContext, bean));
-                    }
-                });
+                if (isSuccess) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d("size : " + bean.getResults().size());
+                            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+                            mRecyclerView.setLayoutManager(layoutManager);
+                            //设置垂直滚动，也可以设置横向滚动
+                            mRecyclerView.setAdapter(new AndroidRvAdapter(mContext, bean));
+                        }
+                    });
+                } else {
+                    Snackbar.make(mRecyclerView, error, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
