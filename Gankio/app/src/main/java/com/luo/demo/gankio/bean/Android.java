@@ -1,5 +1,6 @@
 package com.luo.demo.gankio.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -37,7 +38,7 @@ public class Android {
         this.results = results;
     }
 
-    public static class ResultsBean {
+    public static class ResultsBean implements Serializable {
         /**
          * _id : 59197e87421aa92c7be61afe
          * createdAt : 2017-05-15T18:10:15.604Z
