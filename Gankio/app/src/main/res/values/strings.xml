@@ -30,4 +30,10 @@
     <string name="menu_night_mode_night">Night (always)</string>
     <string name="menu_night_mode_auto">Auto</string>
 
+    <string name="android_detail_reload">重新加载</string>
+    <string name="android_detail_copy">复制链接</string>
+    <string name="android_detail_share">分享链接</string>
+    <string name="android_detail_horizontal">横屏显示</string>
+
+
 </resources>
