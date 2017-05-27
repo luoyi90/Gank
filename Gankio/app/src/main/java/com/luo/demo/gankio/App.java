@@ -3,6 +3,8 @@ package com.luo.demo.gankio;
 import android.app.Application;
 import android.content.Context;
 
+import org.litepal.LitePal;
+
 /**
  * Project: Gankio
  * Author：Mr.Luo
@@ -19,8 +21,9 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         sContext = this;
+        LitePal.initialize(this);
+
     }
 
     public static Context getContext() {

@@ -11,14 +11,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.luo.demo.gankio.R;
-import com.luo.demo.gankio.bean.Android;
+import com.luo.demo.gankio.bean.ResultsBean;
 
 public class DetailActivity extends AppCompatActivity {
 
     public final static String LOAD_URL = "load_url";
     public static final String MODEL = "model";
     private String mUrl;
-    private Android.ResultsBean mResultsBean;
+    private ResultsBean mResultsBean;
     private WebView mWebView;
 
     @Override
@@ -69,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        mResultsBean = (Android.ResultsBean) getIntent().getSerializableExtra(MODEL);
+        mResultsBean = (ResultsBean) getIntent().getSerializableExtra(MODEL);
         mUrl = getIntent().getStringExtra(LOAD_URL);
     }
 

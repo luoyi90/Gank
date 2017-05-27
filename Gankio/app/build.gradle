@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -20,12 +19,6 @@ android {
     }
 }
 
-greendao {
-    schemaVersion 1
-    daoPackage 'com.luo.demo.gankio.dao'
-    targetGenDir 'src/main/java'
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -40,6 +33,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile 'org.greenrobot:greendao:3.2.2'
     testCompile 'junit:junit:4.12'
+    compile 'org.litepal.android:core:1.5.1'
 }
