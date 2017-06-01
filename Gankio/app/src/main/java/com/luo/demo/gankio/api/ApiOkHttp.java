@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.luo.demo.gankio.Constants;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.IOS;
-import com.socks.library.KLog;
 
 import java.io.IOException;
 
@@ -44,7 +43,7 @@ public class ApiOkHttp implements IApi {
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
                 String str = response.body().string();
-                KLog.json(str);
+                // KLog.json(str);
                 Android bean = new Gson().fromJson(str, Android.class);
                 c.onFinish(true, bean, str);
             }

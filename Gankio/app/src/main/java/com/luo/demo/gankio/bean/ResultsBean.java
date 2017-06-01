@@ -29,6 +29,7 @@ public class ResultsBean extends DataSupport implements Serializable {
      * images : ["http://img.gank.io/8c728347-b326-4d41-b7b5-f8e748e65db0"]
      */
 
+    private int Id;
     private String _id;
     private String createdAt;
     private String desc;
@@ -39,6 +40,14 @@ public class ResultsBean extends DataSupport implements Serializable {
     private boolean used;
     private String who;
     private List<String> images;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public String get_id() {
         return _id;
