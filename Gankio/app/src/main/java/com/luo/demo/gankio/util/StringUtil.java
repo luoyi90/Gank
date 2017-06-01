@@ -36,11 +36,11 @@ public class StringUtil {
 
     public static String getTime(String time) {
         String rTime = null;
-        Log.d("time : " + time);
+        // Log.d("time : " + time);
         String temp = TimeUtils.getFormatDate(time);
-        Log.d("temp : " + temp);
+        // Log.d("temp : " + temp);
         int hour = (int) TimeUtils.getTimeSpanByNow(temp, TimeConstants.HOUR);
-        Log.d("hour : " + hour);
+        // Log.d("hour : " + hour);
         if (hour < 24) {
             rTime = hour + "小时前";
         } else {

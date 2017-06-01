@@ -1,5 +1,7 @@
 package com.luo.demo.gankio.bean;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  * 联系:  175262808@qq.com
  */
 
-public class ResultsBean implements Serializable {
+public class ResultsBean extends DataSupport implements Serializable {
     private static final long serialVersionUID = 3420071539665956718L;
 
     /**

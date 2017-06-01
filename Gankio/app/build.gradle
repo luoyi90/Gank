@@ -12,8 +12,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+        }
+
         release {
             minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,4 +41,5 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     compile 'org.litepal.android:core:1.5.1'
+    compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
 }

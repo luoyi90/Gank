@@ -1,6 +1,5 @@
 package com.luo.demo.gankio.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -38,8 +37,8 @@ public class Android {
         this.results = results;
     }
 
-    public static class ResultsBean implements Serializable {
-        /**
+    /*public static class ResultsBean implements Serializable {
+        *//**
          * _id : 59197e87421aa92c7be61afe
          * createdAt : 2017-05-15T18:10:15.604Z
          * desc : Android灵魂画家的18种混合模式
@@ -50,7 +49,7 @@ public class Android {
          * used : true
          * who : 陈宇明
          * images : ["http://img.gank.io/8c728347-b326-4d41-b7b5-f8e748e65db0"]
-         */
+         *//*
 
         private String _id;
         private String createdAt;
@@ -142,5 +141,5 @@ public class Android {
         public void setImages(List<String> images) {
             this.images = images;
         }
-    }
+    }*/
 }
