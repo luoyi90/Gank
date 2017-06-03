@@ -21,6 +21,7 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.MyFragmentPagerAdapter;
 import com.luo.demo.gankio.base.BaseActivity;
 import com.luo.demo.gankio.fragment.AndroidFragment;
+import com.luo.demo.gankio.fragment.IOSFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -121,13 +122,13 @@ public class MainActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AndroidFragment(), "Android");
-        adapter.addFragment(new AndroidFragment(), "IOS");
-        adapter.addFragment(new AndroidFragment(), "Android");
-        adapter.addFragment(new AndroidFragment(), "IOS");
-        adapter.addFragment(new AndroidFragment(), "Android");
-        adapter.addFragment(new AndroidFragment(), "IOS");
-        adapter.addFragment(new AndroidFragment(), "Android");
-        adapter.addFragment(new AndroidFragment(), "IOS");
+        adapter.addFragment(new IOSFragment(), "IOS");
+        adapter.addFragment(new IOSFragment(), "Android");
+        adapter.addFragment(new IOSFragment(), "IOS");
+        adapter.addFragment(new IOSFragment(), "Android");
+        adapter.addFragment(new IOSFragment(), "IOS");
+        adapter.addFragment(new IOSFragment(), "Android");
+        adapter.addFragment(new IOSFragment(), "IOS");
         viewPager.setAdapter(adapter);
     }
 

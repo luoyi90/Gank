@@ -45,7 +45,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mContext = getContext();
-
+        KLog.d(getClass().getName() + " onCreateView execute");
         View mRootView = inflater.inflate(R.layout.fragment_android, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.android_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.android_swiper);
@@ -59,6 +59,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        KLog.d(this + " onActivityCreated execute");
         getData();
     }
 
@@ -70,26 +71,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                 checkSwipeRefreshLayout();
 
                 if (isSuccess) {
-
-                    for (int i = 0; i < bean.getResults().size(); i++) {
-                        KLog.d("beford : " + bean.getResults().get(i).getCreatedAt());
-                    }
-
-                    for (int i = 0; i < bean.getResults().size(); i++) {
-                        String time = TimeUtils.getFormatDate(bean.getResults().get(i).getCreatedAt());
-                        KLog.d("time : " + time);
-                        bean.getResults().get(i).setCreatedAt(time);
-                    }
-
-                    for (int i = 0; i < bean.getResults().size(); i++) {
-                        KLog.d("after : " + bean.getResults().get(i).getCreatedAt());
-                    }
-
-                    // 如果存在则修改，否则插入 -- 根据唯一的url
-                    for (int i = 0; i < bean.getResults().size(); i++) {
-                        bean.getResults().get(i).saveOrUpdate("url=?", bean.getResults().get(i).getUrl());
-                    }
-
+                    saveAndformat(bean);
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -104,15 +86,11 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            // List<ResultsBean> mList = DataSupport.findAll(ResultsBean.class);
-
                             List<ResultsBean> mList = DataSupport.order("createdAt desc").limit(10).find(ResultsBean.class);
-
                             if (mList.isEmpty()) {
                                 Snackbar.make(mRecyclerView, "获取数据失败", Snackbar.LENGTH_LONG).show();
                                 return;
                             }
-
                             final Android android = new Android();
                             android.setResults(mList);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -126,6 +104,27 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         });
     }
 
+    /**
+     * 缓存数据及格式化时间
+     *
+     * @param bean
+     */
+    private void saveAndformat(Android bean) {
+        // 格式化时间
+        for (int i = 0; i < bean.getResults().size(); i++) {
+            String time = TimeUtils.getFormatDate(bean.getResults().get(i).getCreatedAt());
+            bean.getResults().get(i).setCreatedAt(time);
+        }
+
+        // 如果存在则修改，否则插入 -- 根据唯一的url
+        for (int i = 0; i < bean.getResults().size(); i++) {
+            bean.getResults().get(i).saveOrUpdate("url=?", bean.getResults().get(i).getUrl());
+        }
+    }
+
+    /**
+     * 检查刷新状态
+     */
     private void checkSwipeRefreshLayout() {
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.post(new Runnable() {
@@ -139,7 +138,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        KLog.d("onRefresh");
+        KLog.d("Android : onRefresh");
         getData();
     }
 }
