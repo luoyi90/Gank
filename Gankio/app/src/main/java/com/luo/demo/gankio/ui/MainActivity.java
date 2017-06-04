@@ -22,6 +22,7 @@ import com.luo.demo.gankio.adapter.MyFragmentPagerAdapter;
 import com.luo.demo.gankio.base.BaseActivity;
 import com.luo.demo.gankio.fragment.AndroidFragment;
 import com.luo.demo.gankio.fragment.IOSFragment;
+import com.luo.demo.gankio.widget.MyViewPager;
 
 public class MainActivity extends BaseActivity {
 
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity {
             setupDrawerContent(navigationView);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        MyViewPager viewPager = (MyViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
@@ -122,13 +123,12 @@ public class MainActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AndroidFragment(), "Android");
-        adapter.addFragment(new IOSFragment(), "IOS");
-        adapter.addFragment(new IOSFragment(), "Android");
-        adapter.addFragment(new IOSFragment(), "IOS");
-        adapter.addFragment(new IOSFragment(), "Android");
-        adapter.addFragment(new IOSFragment(), "IOS");
-        adapter.addFragment(new IOSFragment(), "Android");
-        adapter.addFragment(new IOSFragment(), "IOS");
+
+        Bundle b = new Bundle();
+        for (int i = 0; i < 7; i++) {
+            IOSFragment iosFragment = new IOSFragment();
+            adapter.addFragment(iosFragment, "IOS " + (i + 1));
+        }
         viewPager.setAdapter(adapter);
     }
 

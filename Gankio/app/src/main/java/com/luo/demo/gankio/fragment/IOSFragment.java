@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.base.BaseFragment;
@@ -21,6 +20,7 @@ import com.socks.library.KLog;
 
 public class IOSFragment extends BaseFragment {
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +32,6 @@ public class IOSFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         KLog.d("IOS onCreate");
         View mRootView = inflater.inflate(R.layout.fragment_ios, container, false);
-        TextView tv = (TextView) mRootView.findViewById(R.id.ios_tv);
-        // 设置下拉进度的主题颜色
         return mRootView;
     }
 

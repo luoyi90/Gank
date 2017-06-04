@@ -19,6 +19,7 @@ import com.luo.demo.gankio.api.CallBack;
 import com.luo.demo.gankio.base.BaseFragment;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.ResultsBean;
+import com.luo.demo.gankio.listener.LoadMoreScrollListener;
 import com.luo.demo.gankio.util.TimeUtils;
 import com.socks.library.KLog;
 
@@ -34,22 +35,29 @@ import java.util.List;
  * 联系:  175262808@qq.com
  */
 
-public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, LoadMoreScrollListener.LoadMoreListener {
 
     private Context mContext;
     private Handler mHandler = new Handler();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private int mCurrentPage;
+    private int mPageCount;
+    private List<ResultsBean> mData;
+    private AndroidRvAdapter mRvAdapter;
+
+    private int startPage = 10;
+    private int endPage = startPage + 10;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mContext = getContext();
-        KLog.d(getClass().getName() + " onCreateView execute");
+
         View mRootView = inflater.inflate(R.layout.fragment_android, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.android_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.android_swiper);
-
+        setLoadMore();
         // 设置下拉进度的主题颜色
         mSwipeRefreshLayout.setColorSchemeResources(R.color.red, R.color.blue, R.color.green);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -63,8 +71,16 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         getData();
     }
 
+    private void setLoadMore() {
+        LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
+        mRecyclerView.addOnScrollListener(listener);
+    }
+
     private void getData() {
-        Api.getInstance().getAndroid(10, 1, new CallBack<Android>() {
+        mPageCount = 10;    // 个数
+        mCurrentPage = 1;   // 页数
+
+        Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
             @Override
             public void onFinish(boolean isSuccess, final Android bean, final String error) {
 
@@ -75,10 +91,12 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            mData = bean.getResults();
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             mRecyclerView.setLayoutManager(layoutManager);
-                            mRecyclerView.setAdapter(new AndroidRvAdapter(mContext, bean));
+                            mRvAdapter = new AndroidRvAdapter(mContext, mData);
+                            mRecyclerView.setAdapter(mRvAdapter);
                         }
                     });
 
@@ -86,17 +104,16 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            List<ResultsBean> mList = DataSupport.order("createdAt desc").limit(10).find(ResultsBean.class);
-                            if (mList.isEmpty()) {
+                            mData = DataSupport.order("createdAt desc").limit(10).find(ResultsBean.class);
+                            if (mData.isEmpty()) {
                                 Snackbar.make(mRecyclerView, "获取数据失败", Snackbar.LENGTH_LONG).show();
                                 return;
                             }
-                            final Android android = new Android();
-                            android.setResults(mList);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             mRecyclerView.setLayoutManager(layoutManager);
-                            mRecyclerView.setAdapter(new AndroidRvAdapter(mContext, android));
+                            mRvAdapter = new AndroidRvAdapter(mContext, mData);
+                            mRecyclerView.setAdapter(mRvAdapter);
                         }
                     });
                 }
@@ -134,11 +151,79 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                 }
             });
         }
+
+
+        startPage = 10;
+        endPage = startPage + 10;
     }
 
+    // 刷新
     @Override
     public void onRefresh() {
         KLog.d("Android : onRefresh");
         getData();
+    }
+
+    // 加载更多
+    @Override
+    public void onLoadMore() {
+        KLog.d("Android : onLoadMore");
+        mCurrentPage = mCurrentPage + 1;
+
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            return;
+        }
+        mSwipeRefreshLayout.setRefreshing(true);
+
+        Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
+            @Override
+            public void onFinish(boolean isSuccess, final Android bean, String error) {
+                if (isSuccess) {
+                    // 成功
+                    saveAndformat(bean);
+
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            if (mData.isEmpty()) {
+                                mData = bean.getResults();
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                                mRecyclerView.setLayoutManager(layoutManager);
+                                mRvAdapter = new AndroidRvAdapter(mContext, mData);
+                                mRecyclerView.setAdapter(mRvAdapter);
+                            } else {
+                                mData.addAll(bean.getResults());
+                                mRvAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                } else {
+                    // 失败
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            List<ResultsBean> mList = DataSupport.order("createdAt desc")
+                                    .limit(startPage).offset(endPage).find(ResultsBean.class);
+                            if (mList.isEmpty()) {
+                                Snackbar.make(mRecyclerView, "没有更多数据了", Snackbar.LENGTH_LONG).show();
+                                return;
+                            }
+
+                            if (mData.isEmpty()) {
+                                return;
+                            }
+                            startPage += 10;
+                            endPage += 10;
+                            mData.addAll(mList);
+                            mRvAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 }
