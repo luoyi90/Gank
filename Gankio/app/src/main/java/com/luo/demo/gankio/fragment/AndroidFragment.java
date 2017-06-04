@@ -46,9 +46,6 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
 
-    private int startPage = 10;
-    private int endPage = startPage + 10;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -104,7 +101,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mData = DataSupport.order("createdAt desc").limit(10).find(ResultsBean.class);
+                            mData = DataSupport.order("createdAt").limit(10).find(ResultsBean.class);
                             if (mData.isEmpty()) {
                                 Snackbar.make(mRecyclerView, "获取数据失败", Snackbar.LENGTH_LONG).show();
                                 return;
@@ -151,10 +148,6 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                 }
             });
         }
-
-
-        startPage = 10;
-        endPage = startPage + 10;
     }
 
     // 刷新
@@ -205,18 +198,16 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(false);
-                            List<ResultsBean> mList = DataSupport.order("createdAt desc")
-                                    .limit(startPage).offset(endPage).find(ResultsBean.class);
-                            if (mList.isEmpty()) {
-                                Snackbar.make(mRecyclerView, "没有更多数据了", Snackbar.LENGTH_LONG).show();
-                                return;
-                            }
 
                             if (mData.isEmpty()) {
                                 return;
                             }
-                            startPage += 10;
-                            endPage += 10;
+                            List<ResultsBean> mList = DataSupport.order("createdAt")
+                                    .limit(mData.size()).offset(mData.size() + 10).find(ResultsBean.class);
+                            if (mList.isEmpty()) {
+                                Snackbar.make(mRecyclerView, "没有更多数据了", Snackbar.LENGTH_LONG).show();
+                                return;
+                            }
                             mData.addAll(mList);
                             mRvAdapter.notifyDataSetChanged();
                         }
