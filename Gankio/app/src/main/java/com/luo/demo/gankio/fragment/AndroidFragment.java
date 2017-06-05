@@ -45,6 +45,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     private int mPageCount;
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
+    private int mOffsetCount;
 
     @Nullable
     @Override
@@ -75,6 +76,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
 
     private void getData() {
         mPageCount = 10;    // 个数
+        mOffsetCount = mPageCount;
         mCurrentPage = 1;   // 页数
 
         Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
@@ -203,11 +205,12 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                                 return;
                             }
                             List<ResultsBean> mList = DataSupport.order("createdAt")
-                                    .limit(mData.size()).offset(mData.size() + 10).find(ResultsBean.class);
+                                    .limit(mPageCount).offset(mOffsetCount).find(ResultsBean.class);
                             if (mList.isEmpty()) {
                                 Snackbar.make(mRecyclerView, "没有更多数据了", Snackbar.LENGTH_LONG).show();
                                 return;
                             }
+                            mOffsetCount = mOffsetCount + 10;
                             mData.addAll(mList);
                             mRvAdapter.notifyDataSetChanged();
                         }
@@ -217,4 +220,5 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         });
 
     }
+
 }
