@@ -11,7 +11,7 @@ import java.util.List;
  * FIXME:
  */
 
-public class Rest {
+public class Video {
 
     /**
      * error : false
@@ -37,8 +37,8 @@ public class Rest {
         this.results = results;
     }
 
-    public static class ResultsBean {
-        /**
+    /*public static class ResultsBean {
+        *//**
          * _id : 59172946421aa91c8e7b1eb1
          * createdAt : 2017-05-13T23:41:58.32Z
          * desc : 【牛叔】日本学生的励志故事《垫底辣妹》看完之后你哭了没
@@ -48,7 +48,7 @@ public class Rest {
          * url : http://www.bilibili.com/video/av9266813/
          * used : true
          * who : LHF
-         */
+         *//*
 
         private String _id;
         private String createdAt;
@@ -131,5 +131,5 @@ public class Rest {
         public void setWho(String who) {
             this.who = who;
         }
-    }
+    }*/
 }

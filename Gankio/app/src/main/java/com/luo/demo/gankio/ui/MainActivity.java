@@ -21,7 +21,12 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.MyFragmentPagerAdapter;
 import com.luo.demo.gankio.base.BaseActivity;
 import com.luo.demo.gankio.fragment.AndroidFragment;
+import com.luo.demo.gankio.fragment.AppFragment;
+import com.luo.demo.gankio.fragment.ExpandFragment;
 import com.luo.demo.gankio.fragment.IOSFragment;
+import com.luo.demo.gankio.fragment.JSFragment;
+import com.luo.demo.gankio.fragment.RecommendFragment;
+import com.luo.demo.gankio.fragment.VideoFragment;
 import com.luo.demo.gankio.widget.MyViewPager;
 
 public class MainActivity extends BaseActivity {
@@ -122,13 +127,13 @@ public class MainActivity extends BaseActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new AndroidFragment(), "Android");
-
-        Bundle b = new Bundle();
-        for (int i = 0; i < 7; i++) {
-            IOSFragment iosFragment = new IOSFragment();
-            adapter.addFragment(iosFragment, "IOS " + (i + 1));
-        }
+        adapter.addFragment(new AndroidFragment(),   "Android");
+        adapter.addFragment(new AppFragment(),       "App");
+        adapter.addFragment(new ExpandFragment(),    "拓展资源");
+        adapter.addFragment(new IOSFragment(),       "IOS");
+        adapter.addFragment(new JSFragment(),        "JS");
+        adapter.addFragment(new RecommendFragment(), "瞎推荐");
+        adapter.addFragment(new VideoFragment(),     "休息视频");
         viewPager.setAdapter(adapter);
     }
 

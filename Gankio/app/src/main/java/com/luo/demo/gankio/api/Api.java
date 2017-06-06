@@ -1,7 +1,12 @@
 package com.luo.demo.gankio.api;
 
 import com.luo.demo.gankio.bean.Android;
+import com.luo.demo.gankio.bean.App;
+import com.luo.demo.gankio.bean.Expand;
 import com.luo.demo.gankio.bean.IOS;
+import com.luo.demo.gankio.bean.JS;
+import com.luo.demo.gankio.bean.Recommend;
+import com.luo.demo.gankio.bean.Video;
 
 /**
  * Project: Gankio
@@ -39,4 +44,30 @@ public class Api implements IApi {
     public void getIOS(int count, int pager, CallBack<IOS> c) {
         mApi.getIOS(count, pager, c);
     }
+
+    @Override
+    public void getJS(int count, int pager, CallBack<JS> c) {
+        mApi.getJS(count, pager, c);
+    }
+
+    @Override
+    public void getVideo(int count, int pager, CallBack<Video> c) {
+        mApi.getVideo(count, pager, c);
+    }
+
+    @Override
+    public void getExpand(int count, int pager, CallBack<Expand> c) {
+        mApi.getExpand(count, pager, c);
+    }
+
+    @Override
+    public void getApp(int count, int pager, CallBack<App> c) {
+        mApi.getApp(count, pager, c);
+    }
+
+    @Override
+    public void getRecommend(int count, int pager, CallBack<Recommend> c) {
+        mApi.getRecommend(count, pager, c);
+    }
+
 }

@@ -12,11 +12,18 @@ package com.luo.demo.gankio;
 public interface Constants {
 
     String Android = "http://gank.io/api/data/Android/";
+    String APP     = "http://gank.io/api/data/App/";
+    String EXPAND     = "http://gank.io/api/data/拓展资源/";
+    String IOS     = "http://gank.io/api/data/iOS/";
+    String JS     = "http://gank.io/api/data/前端/";
+    String RECOMMEND     = "http://gank.io/api/data/瞎推荐/";
+    String VIDEO     = "http://gank.io/api/data/休息视频/";
 
 
     // 干货API分类数据基本地址
-    String GANK_URL = "http://gank.io/api/";
+    String GANK_URL = "http://gank.io/api/data/";
 
+    // base
     String URL_GANK = "http://gank.io";
 
     // 各类标签

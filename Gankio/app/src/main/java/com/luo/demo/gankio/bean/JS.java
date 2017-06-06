@@ -11,7 +11,7 @@ import java.util.List;
  * FIXME:
  */
 
-public class Front {
+public class JS {
 
 
     /**
@@ -38,8 +38,8 @@ public class Front {
         this.results = results;
     }
 
-    public static class ResultsBean {
-        /**
+    /*public static class ResultsBean {
+        *//**
          * _id : 5919cd83421aa92c769a8b61
          * createdAt : 2017-05-15T23:47:15.588Z
          * desc : 前端每周清单第 13 期：Webpack CLI 发布、Angular 5 可期待的新特性、解密现代浏览器引擎构建之道
@@ -50,7 +50,7 @@ public class Front {
          * used : true
          * who : 王下邀月熊
          * images : ["http://img.gank.io/02c7c126-de84-4a07-8833-2e97b11b10b2"]
-         */
+         *//*
 
         private String _id;
         private String createdAt;
@@ -142,5 +142,5 @@ public class Front {
         public void setImages(List<String> images) {
             this.images = images;
         }
-    }
+    }*/
 }

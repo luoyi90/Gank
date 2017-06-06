@@ -35,5 +35,11 @@
     <string name="android_detail_share">分享链接</string>
     <string name="android_detail_horizontal">横屏显示</string>
 
+    <string name="fragment_android_no_data">没有更多数据了</string>
+    <string name="fragment_android_data_fail">获取数据失败</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

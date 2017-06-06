@@ -1,9 +1,11 @@
 package com.luo.demo.gankio.fragment;
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +18,7 @@ import com.luo.demo.gankio.adapter.AndroidRvAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
 import com.luo.demo.gankio.base.BaseFragment;
-import com.luo.demo.gankio.bean.Android;
+import com.luo.demo.gankio.bean.Expand;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
 import com.luo.demo.gankio.util.TimeUtils;
@@ -27,14 +29,9 @@ import org.litepal.crud.DataSupport;
 import java.util.List;
 
 /**
- * 包名:  com.luo.demo.gankio.fragment
- * 作者:  Mr.Luo
- * 时间:  2017/5/22 14:17
- * 描述:  bean:android
- * 联系:  175262808@qq.com
+ * A simple {@link Fragment} subclass.
  */
-
-public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, LoadMoreScrollListener.LoadMoreListener {
+public class ExpandFragment extends BaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
     public Handler mHandler = new Handler();
     private RecyclerView mRecyclerView;
@@ -45,13 +42,12 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        KLog.d("AndroidFragment onCreateView");
-        View mRootView = inflater.inflate(R.layout.fragment_android, container, false);
-        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.android_recyclerview);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.android_swiper);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        KLog.d("ExpandFragment onCreateView");
+        View mRootView = inflater.inflate(R.layout.fragment_expand, container, false);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.expand_recyclerview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.expand_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
         mRecyclerView.addOnScrollListener(listener);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.red, R.color.blue, R.color.green);
@@ -62,7 +58,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        KLog.d("AndroidFragment onActivityCreated");
+        KLog.d("ExpandFragment onActivityCreated");
         getData();
     }
 
@@ -71,9 +67,9 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         mOffsetCount = mPageCount;
         mCurrentPage = 1;   // 页数
 
-        Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
+        Api.getInstance().getExpand(mPageCount, mCurrentPage, new CallBack<Expand>() {
             @Override
-            public void onFinish(final boolean isSuccess, final Android bean, final String error) {
+            public void onFinish(final boolean isSuccess, final Expand bean, final String error) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -88,10 +84,9 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                             mRvAdapter = new AndroidRvAdapter(mActivity, mData);
                             mRecyclerView.setAdapter(mRvAdapter);
                         } else {
-                            mData = DataSupport.where("flag=?", "android").order("createdAt desc").limit(10).find(ResultsBean.class);
+                            mData = DataSupport.where("flag=?", "expand").order("createdAt desc").limit(10).find(ResultsBean.class);
                             if (mData.isEmpty()) {
-                                Snackbar.make(mRecyclerView, getResources().
-                                                getString(R.string.fragment_android_data_fail),
+                                Snackbar.make(mRecyclerView, getResources().getString(R.string.fragment_android_data_fail),
                                         Snackbar.LENGTH_LONG).show();
                                 return;
                             }
@@ -109,13 +104,11 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         });
     }
 
-    // 刷新
     @Override
     public void onRefresh() {
         getData();
     }
 
-    // 加载更多
     @Override
     public void onLoadMore() {
         mCurrentPage = mCurrentPage + 1;
@@ -125,9 +118,9 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         }
         mSwipeRefreshLayout.setRefreshing(true);
 
-        Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
+        Api.getInstance().getExpand(mPageCount, mCurrentPage, new CallBack<Expand>() {
             @Override
-            public void onFinish(final boolean isSuccess, final Android bean, String error) {
+            public void onFinish(final boolean isSuccess, final Expand bean, String error) {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -152,7 +145,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
                             if (mData.isEmpty()) {
                                 return;
                             }
-                            List<ResultsBean> mList = DataSupport.where("flag=?", "android").order("createdAt desc")
+                            List<ResultsBean> mList = DataSupport.where("flag=?", "expand").order("createdAt desc")
                                     .limit(mPageCount).offset(mOffsetCount).find(ResultsBean.class);
                             if (mList.isEmpty()) {
                                 Snackbar.make(mRecyclerView, getResources().
@@ -176,12 +169,12 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
      *
      * @param bean
      */
-    private void saveAndformat(Android bean) {
+    private void saveAndformat(Expand bean) {
         // 格式化时间
         for (int i = 0; i < bean.getResults().size(); i++) {
             String time = TimeUtils.getFormatDate(bean.getResults().get(i).getCreatedAt());
             bean.getResults().get(i).setCreatedAt(time);
-            bean.getResults().get(i).setFlag("android");
+            bean.getResults().get(i).setFlag("expand");
         }
 
         // 如果存在则修改，否则插入 -- 根据唯一的url

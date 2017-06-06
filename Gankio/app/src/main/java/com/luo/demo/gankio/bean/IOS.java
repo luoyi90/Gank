@@ -37,8 +37,8 @@ public class IOS {
         this.results = results;
     }
 
-    public static class ResultsBean {
-        /**
+    /*public static class ResultsBean {
+        *//**
          * _id : 5918eac7421aa91c82fa666d
          * createdAt : 2017-05-15T07:39:51.279Z
          * desc : IOS Banner 通知效果
@@ -49,7 +49,7 @@ public class IOS {
          * url : https://github.com/Daltron/NotificationBanner
          * used : true
          * who : Ola
-         */
+         *//*
 
         private String _id;
         private String createdAt;
@@ -141,5 +141,5 @@ public class IOS {
         public void setImages(List<String> images) {
             this.images = images;
         }
-    }
+    }*/
 }

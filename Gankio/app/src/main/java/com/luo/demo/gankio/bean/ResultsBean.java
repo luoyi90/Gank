@@ -40,6 +40,15 @@ public class ResultsBean extends DataSupport implements Serializable {
     private boolean used;
     private String who;
     private List<String> images;
+    private String flag;
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public int getId() {
         return Id;
