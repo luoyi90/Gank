@@ -44,12 +44,15 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
+    private View mRootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        KLog.d("AndroidFragment onCreateView");
-        View mRootView = inflater.inflate(R.layout.fragment_android, container, false);
+        if (mRootView != null) {
+            return mRootView;
+        }
+        mRootView = inflater.inflate(R.layout.fragment_android, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.android_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.android_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
@@ -62,7 +65,7 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        KLog.d("AndroidFragment onActivityCreated");
+        KLog.d("android onActivityCreated");
         getData();
     }
 
@@ -190,4 +193,11 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRootView != null) {
+            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
+        }
+    }
 }

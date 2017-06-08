@@ -41,11 +41,14 @@ public class AppFragment extends BaseFragment implements LoadMoreScrollListener.
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
+    private View mRootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        KLog.d("AppFragment onCreateView");
-        View mRootView = inflater.inflate(R.layout.fragment_app, container, false);
+        if (mRootView != null) {
+            return mRootView;
+        }
+        mRootView = inflater.inflate(R.layout.fragment_app, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.app_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.app_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
@@ -58,7 +61,7 @@ public class AppFragment extends BaseFragment implements LoadMoreScrollListener.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        KLog.d("AppFragment onActivityCreated");
+        KLog.d("app onActivityCreated");
         getData();
     }
 
@@ -183,4 +186,11 @@ public class AppFragment extends BaseFragment implements LoadMoreScrollListener.
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRootView != null) {
+            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
+        }
+    }
 }

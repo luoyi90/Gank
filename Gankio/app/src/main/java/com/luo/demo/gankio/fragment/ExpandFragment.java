@@ -22,7 +22,6 @@ import com.luo.demo.gankio.bean.Expand;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
 import com.luo.demo.gankio.util.TimeUtils;
-import com.socks.library.KLog;
 
 import org.litepal.crud.DataSupport;
 
@@ -41,11 +40,14 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
+    private View mRootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        KLog.d("ExpandFragment onCreateView");
-        View mRootView = inflater.inflate(R.layout.fragment_expand, container, false);
+        if (mRootView != null) {
+            return mRootView;
+        }
+        mRootView = inflater.inflate(R.layout.fragment_expand, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.expand_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.expand_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
@@ -58,7 +60,6 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        KLog.d("ExpandFragment onActivityCreated");
         getData();
     }
 
@@ -180,6 +181,14 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
         // 如果存在则修改，否则插入 -- 根据唯一的url
         for (int i = 0; i < bean.getResults().size(); i++) {
             bean.getResults().get(i).saveOrUpdate("url=?", bean.getResults().get(i).getUrl());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRootView != null) {
+            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
         }
     }
 

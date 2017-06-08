@@ -40,10 +40,14 @@ public class JSFragment extends BaseFragment implements LoadMoreScrollListener.L
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
+    private View mRootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.fragment_js, container, false);
+        if (mRootView != null) {
+            return mRootView;
+        }
+        mRootView = inflater.inflate(R.layout.fragment_js, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.js_recyclerview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.js_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
@@ -56,7 +60,6 @@ public class JSFragment extends BaseFragment implements LoadMoreScrollListener.L
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // KLog.d("AppFragment onActivityCreated");
         getData();
     }
 
@@ -178,6 +181,14 @@ public class JSFragment extends BaseFragment implements LoadMoreScrollListener.L
         // 如果存在则修改，否则插入 -- 根据唯一的url
         for (int i = 0; i < bean.getResults().size(); i++) {
             bean.getResults().get(i).saveOrUpdate("url=?", bean.getResults().get(i).getUrl());
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mRootView != null) {
+            ((ViewGroup) mRootView.getParent()).removeView(mRootView);
         }
     }
 }
