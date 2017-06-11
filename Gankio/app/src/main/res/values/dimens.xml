@@ -20,4 +20,11 @@
     <dimen name="card_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_item_avatar_size">40dp</dimen>
+
+    <dimen name="splash_bottom_padding">10dp</dimen>
+    <dimen name="splash_middle_top_margin">10dp</dimen>
+    <dimen name="splash_bottom_margin">40dp</dimen>
+    <dimen name="splash_top_margin">130dp</dimen>
+
+    <dimen name="small_text">10sp</dimen>
 </resources>

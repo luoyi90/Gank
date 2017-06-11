@@ -40,6 +40,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="splash_copyright">Copyright &#169; 2017 GankIO All Rights Reserved\nPowered by LuoYi</string>
+    <string name="splash_slogan">Go through the every bit of life</string>
 
 </resources>
