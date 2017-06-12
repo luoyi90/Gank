@@ -35,9 +35,9 @@ public class LoadingLayout extends FrameLayout {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LoadingLayout, 0, 0);
         try {
-            emptyView = a.getResourceId(R.styleable.LoadingLayout_emptyView, R.layout.empty_view);
-            errorView = a.getResourceId(R.styleable.LoadingLayout_errorView, R.layout.error_view);
-            loadingView = a.getResourceId(R.styleable.LoadingLayout_loadingView, R.layout.loading_view);
+            emptyView = a.getResourceId(R.styleable.LoadingLayout_emptyView, R.layout.loadinglayout_empty);
+            errorView = a.getResourceId(R.styleable.LoadingLayout_errorView, R.layout.loadinglayout_error);
+            loadingView = a.getResourceId(R.styleable.LoadingLayout_loadingView, R.layout.loadinglayout_loading);
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
             inflater.inflate(emptyView, this, true);

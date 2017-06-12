@@ -43,4 +43,6 @@
     <string name="splash_copyright">Copyright &#169; 2017 GankIO All Rights Reserved\nPowered by LuoYi</string>
     <string name="splash_slogan">Go through the every bit of life</string>
 
+    <string name="loadinglayout_loading">Loading</string>
+
 </resources>
