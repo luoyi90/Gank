@@ -15,7 +15,7 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.AndroidRvAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
-import com.luo.demo.gankio.base.LazyBaseFragment;
+import com.luo.demo.gankio.base.BaseFragment;
 import com.luo.demo.gankio.bean.Recommend;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecommendFragment extends LazyBaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class RecommendFragment extends BaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private int mCurrentPage;
@@ -57,17 +57,18 @@ public class RecommendFragment extends LazyBaseFragment implements LoadMoreScrol
         return mRootView;
     }
 
-    @Override
+    /*@Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             getData();
         }
     }
-
+*/
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // KLog.d("recommend onActivityCreated");
+        getData();
     }
 
     private void getData() {
@@ -82,9 +83,7 @@ public class RecommendFragment extends LazyBaseFragment implements LoadMoreScrol
                     @Override
                     public void run() {
                         if (isSuccess) {
-
                             saveAndformat(bean);
-
                             mData = bean.getResults();
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -94,8 +93,14 @@ public class RecommendFragment extends LazyBaseFragment implements LoadMoreScrol
                         } else {
                             mData = DataSupport.where("flag=?", "recommend").order("createdAt desc").limit(10).find(ResultsBean.class);
                             if (mData.isEmpty()) {
-                                Snackbar.make(mRecyclerView, getResources().getString(R.string.fragment_android_data_fail),
-                                        Snackbar.LENGTH_LONG).show();
+                                if (isAdded()) {
+                                    Snackbar.make(mRecyclerView, getResources().
+                                                    getString(R.string.fragment_android_data_fail),
+                                            Snackbar.LENGTH_LONG).show();
+                                }
+                                mLoadingLayout.showError();
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                return;
                             } else {
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
                                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -105,6 +110,7 @@ public class RecommendFragment extends LazyBaseFragment implements LoadMoreScrol
                             }
                         }
                         mSwipeRefreshLayout.setRefreshing(false);
+                        mLoadingLayout.showContent();
                     }
                 });
 

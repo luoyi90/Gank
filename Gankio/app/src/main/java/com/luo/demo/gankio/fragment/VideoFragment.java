@@ -15,7 +15,7 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.AndroidRvAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
-import com.luo.demo.gankio.base.LazyBaseFragment;
+import com.luo.demo.gankio.base.BaseFragment;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.bean.Video;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class VideoFragment extends LazyBaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class VideoFragment extends BaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private int mCurrentPage;
@@ -57,16 +57,17 @@ public class VideoFragment extends LazyBaseFragment implements LoadMoreScrollLis
         return mRootView;
     }
 
-    @Override
+    /*@Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible)
             getData();
-    }
+    }*/
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // KLog.d("video onActivityCreated");
+        getData();
     }
 
     private void getData() {
@@ -81,9 +82,7 @@ public class VideoFragment extends LazyBaseFragment implements LoadMoreScrollLis
                     @Override
                     public void run() {
                         if (isSuccess) {
-
                             saveAndformat(bean);
-
                             mData = bean.getResults();
                             LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,8 +92,14 @@ public class VideoFragment extends LazyBaseFragment implements LoadMoreScrollLis
                         } else {
                             mData = DataSupport.where("flag=?", "video").order("createdAt desc").limit(10).find(ResultsBean.class);
                             if (mData.isEmpty()) {
-                                Snackbar.make(mRecyclerView, getResources().getString(R.string.fragment_android_data_fail),
-                                        Snackbar.LENGTH_LONG).show();
+                                if (isAdded()) {
+                                    Snackbar.make(mRecyclerView, getResources().
+                                                    getString(R.string.fragment_android_data_fail),
+                                            Snackbar.LENGTH_LONG).show();
+                                }
+                                mLoadingLayout.showError();
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                return;
                             } else {
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
                                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -104,6 +109,7 @@ public class VideoFragment extends LazyBaseFragment implements LoadMoreScrollLis
                             }
                         }
                         mSwipeRefreshLayout.setRefreshing(false);
+                        mLoadingLayout.showContent();
                     }
                 });
 

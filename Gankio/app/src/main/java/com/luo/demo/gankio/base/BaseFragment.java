@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 /**
  * Project: Gankio
@@ -16,12 +18,22 @@ import android.support.v4.app.Fragment;
 
 public class BaseFragment extends Fragment {
 
-    public Activity mActivity;
-    public Handler  mHandler = new Handler();
+    public View               mRootView;
+    public SwipeRefreshLayout mSwipeRefreshLayout;
+    public Activity           mActivity;
+    public Handler            mHandler = new Handler();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
     }
+
+    /*public static void showSnackBar(View v) {
+        Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.fragment_android_data_fail),
+                Snackbar.LENGTH_LONG);
+        if (!snackbar.isShown()) {
+            snackbar.show();
+        }
+    }*/
 }

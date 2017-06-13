@@ -135,7 +135,7 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(new RecommendFragment(), "瞎推荐");
         adapter.addFragment(new VideoFragment(),     "休息视频");
         viewPager.setAdapter(adapter);
-        // viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(5);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

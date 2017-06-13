@@ -14,7 +14,7 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.AndroidRvAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
-import com.luo.demo.gankio.base.LazyBaseFragment;
+import com.luo.demo.gankio.base.BaseFragment;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
@@ -33,7 +33,7 @@ import java.util.List;
  * 联系:  175262808@qq.com
  */
 
-public class AndroidFragment extends LazyBaseFragment implements SwipeRefreshLayout.OnRefreshListener, LoadMoreScrollListener.LoadMoreListener, View.OnClickListener {
+public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, LoadMoreScrollListener.LoadMoreListener, View.OnClickListener {
 
     private RecyclerView mRecyclerView;
     private int mCurrentPage;
@@ -59,20 +59,22 @@ public class AndroidFragment extends LazyBaseFragment implements SwipeRefreshLay
         mRecyclerView.addOnScrollListener(listener);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.red, R.color.blue, R.color.green);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setEnabled(false);
         return mRootView;
     }
 
-    @Override
+    /*@Override
     protected void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             getData();
         }
-    }
+    }*/
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // KLog.d("android onActivityCreated");
+        getData();
     }
 
     private void getData() {
@@ -83,7 +85,7 @@ public class AndroidFragment extends LazyBaseFragment implements SwipeRefreshLay
         Api.getInstance().getAndroid(mPageCount, mCurrentPage, new CallBack<Android>() {
             @Override
             public void onFinish(final boolean isSuccess, final Android bean, final String error) {
-                mHandler.post(new Runnable() {
+                mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         if (isSuccess) {
@@ -97,10 +99,14 @@ public class AndroidFragment extends LazyBaseFragment implements SwipeRefreshLay
                         } else {
                             mData = DataSupport.where("flag=?", "android").order("createdAt desc").limit(10).find(ResultsBean.class);
                             if (mData.isEmpty()) {
-                                Snackbar.make(mRecyclerView, getResources().
-                                                getString(R.string.fragment_android_data_fail),
-                                        Snackbar.LENGTH_LONG).show();
+                                if (isAdded()) {
+                                    Snackbar.make(mRecyclerView, getResources().
+                                                    getString(R.string.fragment_android_data_fail),
+                                            Snackbar.LENGTH_LONG).show();
+                                }
                                 mLoadingLayout.showError();
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                return;
                             } else {
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
                                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -109,10 +115,11 @@ public class AndroidFragment extends LazyBaseFragment implements SwipeRefreshLay
                                 mRecyclerView.setAdapter(mRvAdapter);
                             }
                         }
+                        mSwipeRefreshLayout.setEnabled(true);
                         mSwipeRefreshLayout.setRefreshing(false);
                         mLoadingLayout.showContent();
                     }
-                });
+                }, 1500);
 
             }
         });
