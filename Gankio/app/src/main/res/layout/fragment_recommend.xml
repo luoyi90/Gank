@@ -9,10 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/recommend_recyclerview"
+        <com.luo.demo.gankio.view.LoadingLayout
+            android:id="@+id/recommend_loadinglayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommend_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.luo.demo.gankio.view.LoadingLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

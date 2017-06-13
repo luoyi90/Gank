@@ -2,12 +2,8 @@ package com.luo.demo.gankio.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * Project: Gankio
@@ -20,22 +16,12 @@ import android.view.ViewGroup;
 
 public class BaseFragment extends Fragment {
 
-    protected Activity mActivity;
+    public Activity mActivity;
+    public Handler  mHandler = new Handler();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 }

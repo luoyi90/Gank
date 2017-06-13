@@ -1,8 +1,6 @@
 package com.luo.demo.gankio.fragment;
 
-
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -17,11 +15,12 @@ import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.adapter.AndroidRvAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
-import com.luo.demo.gankio.base.BaseFragment;
+import com.luo.demo.gankio.base.LazyBaseFragment;
 import com.luo.demo.gankio.bean.Expand;
 import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
 import com.luo.demo.gankio.util.TimeUtils;
+import com.luo.demo.gankio.view.LoadingLayout;
 
 import org.litepal.crud.DataSupport;
 
@@ -30,17 +29,15 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExpandFragment extends BaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class ExpandFragment extends LazyBaseFragment implements LoadMoreScrollListener.LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
-    public Handler mHandler = new Handler();
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private int mCurrentPage;
     private int mPageCount;
     private List<ResultsBean> mData;
     private AndroidRvAdapter mRvAdapter;
     private int mOffsetCount;
-    private View mRootView;
+    private LoadingLayout mLoadingLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +46,9 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
         }
         mRootView = inflater.inflate(R.layout.fragment_expand, container, false);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.expand_recyclerview);
+        mLoadingLayout = (LoadingLayout) mRootView.findViewById(R.id.expand_loadinglayout);
+        mLoadingLayout.setOnRetryClickListener(this);
+        mLoadingLayout.showLoading();
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.expand_swiper);
         LoadMoreScrollListener listener = new LoadMoreScrollListener(this);
         mRecyclerView.addOnScrollListener(listener);
@@ -58,9 +58,16 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
     }
 
     @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+        if (isVisible) {
+            getData();
+        }
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getData();
+        // KLog.d("expand onActivityCreated");
     }
 
     private void getData() {
@@ -89,13 +96,13 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
                             if (mData.isEmpty()) {
                                 Snackbar.make(mRecyclerView, getResources().getString(R.string.fragment_android_data_fail),
                                         Snackbar.LENGTH_LONG).show();
-                                return;
+                            } else {
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
+                                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                                mRecyclerView.setLayoutManager(layoutManager);
+                                mRvAdapter = new AndroidRvAdapter(mActivity, mData);
+                                mRecyclerView.setAdapter(mRvAdapter);
                             }
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
-                            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                            mRecyclerView.setLayoutManager(layoutManager);
-                            mRvAdapter = new AndroidRvAdapter(mActivity, mData);
-                            mRecyclerView.setAdapter(mRvAdapter);
                         }
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
@@ -192,4 +199,18 @@ public class ExpandFragment extends BaseFragment implements LoadMoreScrollListen
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_error_retry:
+                mLoadingLayout.showLoading();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getData();
+                    }
+                }, 2000);
+                break;
+        }
+    }
 }

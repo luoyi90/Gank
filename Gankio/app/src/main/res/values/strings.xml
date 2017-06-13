@@ -44,5 +44,7 @@
     <string name="splash_slogan">Go through the every bit of life</string>
 
     <string name="loadinglayout_loading">Loading</string>
+    <string name="loadinglayout_error">出错了!</string>
+    <string name="loadinglayout_reload">重新加载</string>
 
 </resources>
