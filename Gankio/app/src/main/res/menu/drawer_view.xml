@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2015 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,11 +37,13 @@
     <item android:title="Sub items">
         <menu>
             <item
+                android:id="@+id/nav_all"
                 android:icon="@drawable/ic_dashboard"
-                android:title="Sub item 1" />
+                android:title="ALL" />
             <item
+                android:id="@+id/nav_welfare"
                 android:icon="@drawable/ic_forum"
-                android:title="Sub item 2" />
+                android:title="福利" />
         </menu>
     </item>
 

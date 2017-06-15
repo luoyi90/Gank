@@ -18,6 +18,8 @@ public interface Constants {
     String JS     = "http://gank.io/api/data/前端/";
     String RECOMMEND     = "http://gank.io/api/data/瞎推荐/";
     String VIDEO     = "http://gank.io/api/data/休息视频/";
+    String ALL     = "http://gank.io/api/data/all/";
+    String WELFARE     = "http://gank.io/api/data/福利/";
 
 
     // 干货API分类数据基本地址

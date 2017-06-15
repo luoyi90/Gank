@@ -10,16 +10,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.DesignDemo">
-        <activity android:name=".ui.MainActivity">
-
-        </activity>
-
+        <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.DetailActivity" />
-
-        <activity android:name=".ui.TestActivity">
-
-        </activity>
-
+        <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.ClickActivity" />
+        <activity android:name=".ui.WelfareActivity" />
+        <activity android:name=".ui.AllActivity"></activity>
     </application>
 
 </manifest>

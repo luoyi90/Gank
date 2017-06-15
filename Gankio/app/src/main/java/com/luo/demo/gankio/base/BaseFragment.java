@@ -18,22 +18,14 @@ import android.view.View;
 
 public class BaseFragment extends Fragment {
 
-    public View               mRootView;
+    public View mRootView;
     public SwipeRefreshLayout mSwipeRefreshLayout;
-    public Activity           mActivity;
-    public Handler            mHandler = new Handler();
+    public Activity mActivity;
+    public Handler mHandler = new Handler();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (Activity) context;
     }
-
-    /*public static void showSnackBar(View v) {
-        Snackbar snackbar = Snackbar.make(v, getResources().getString(R.string.fragment_android_data_fail),
-                Snackbar.LENGTH_LONG);
-        if (!snackbar.isShown()) {
-            snackbar.show();
-        }
-    }*/
 }

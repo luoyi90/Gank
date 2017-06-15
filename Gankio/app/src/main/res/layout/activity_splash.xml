@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,61 +8,80 @@
 
     <ImageView
         android:id="@+id/splash_image"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/splash_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/splash_top_margin"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/splash_top_margin"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/splash_slogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/splash_slogan"
-        android:textSize="@dimen/small_text"
-        android:textColor="@color/alpha_90_white"
+        android:layout_below="@id/splash_app_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/splash_middle_top_margin"
-        android:layout_below="@id/splash_app_name"/>
+        android:text="@string/splash_slogan"
+        android:textColor="@color/alpha_90_white"
+        android:textSize="@dimen/small_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@color/alpha_10_white"
         android:layout_alignParentBottom="true"
-        android:padding="@dimen/splash_bottom_padding"
-        android:layout_marginBottom="@dimen/splash_bottom_margin">
+        android:layout_marginBottom="@dimen/splash_bottom_margin"
+        android:background="@color/alpha_10_white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/splash_bottom_padding">
 
         <TextView
+            android:id="@+id/splash_version_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
             android:gravity="center"
-            android:id="@+id/splash_version_name"/>
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/splash_copyright"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:layout_marginTop="@dimen/splash_middle_top_margin"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
-            android:id="@+id/splash_copyright"
-            android:layout_marginTop="@dimen/splash_middle_top_margin"/>
-
-
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
     </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        app:contentPadding="12dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="10dp">
+
+        <TextView
+            android:id="@+id/splash_click"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_jump"
+            android:textColor="@color/alpha_25_black"
+            android:textSize="14sp" />
+
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>

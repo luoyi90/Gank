@@ -20,6 +20,7 @@ import com.luo.demo.gankio.bean.ResultsBean;
 import com.luo.demo.gankio.listener.LoadMoreScrollListener;
 import com.luo.demo.gankio.util.TimeUtils;
 import com.luo.demo.gankio.view.LoadingLayout;
+import com.socks.library.KLog;
 
 import org.litepal.crud.DataSupport;
 
@@ -63,17 +64,10 @@ public class AndroidFragment extends BaseFragment implements SwipeRefreshLayout.
         return mRootView;
     }
 
-    /*@Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible) {
-            getData();
-        }
-    }*/
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // KLog.d("android onActivityCreated");
+        KLog.d("android onActivityCreated");
         getData();
     }
 

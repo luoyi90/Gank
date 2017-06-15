@@ -58,13 +58,6 @@ public class AppFragment extends BaseFragment implements LoadMoreScrollListener.
         return mRootView;
     }
 
-    /*@Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
-        if (isVisible) {
-            getData();
-        }
-    }*/
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

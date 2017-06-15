@@ -46,5 +46,6 @@
     <string name="loadinglayout_loading">Loading</string>
     <string name="loadinglayout_error">出错了!</string>
     <string name="loadinglayout_reload">重新加载</string>
+    <string name="splash_jump">跳过</string>
 
 </resources>
