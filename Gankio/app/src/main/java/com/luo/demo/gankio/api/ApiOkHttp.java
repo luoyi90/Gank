@@ -11,6 +11,7 @@ import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
 import com.luo.demo.gankio.bean.Video;
+import com.luo.demo.gankio.bean.Welfare;
 
 import java.io.IOException;
 
@@ -175,6 +176,27 @@ class ApiOkHttp implements IApi {
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
                 String str = response.body().string();
                 Recommend bean = new Gson().fromJson(str, Recommend.class);
+                c.onFinish(true, bean, str);
+            }
+        });
+    }
+
+    @Override
+    public void getWelfare(int count, int pager, final CallBack<Welfare> c) {
+        Request.Builder requestBuilder = new Request.Builder().url(Constants.WELFARE + count + "/" + pager);
+        Request request = requestBuilder.build();
+        Call mCall = mOkHttpClient.newCall(request);
+
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                c.onFinish(false, null, e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
+                String str = response.body().string();
+                Welfare bean = new Gson().fromJson(str, Welfare.class);
                 c.onFinish(true, bean, str);
             }
         });

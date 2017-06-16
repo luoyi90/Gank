@@ -7,6 +7,7 @@ import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
 import com.luo.demo.gankio.bean.Video;
+import com.luo.demo.gankio.bean.Welfare;
 
 /**
  * Project: Gankio
@@ -68,6 +69,11 @@ public class Api implements IApi {
     @Override
     public void getRecommend(int count, int pager, CallBack<Recommend> c) {
         mApi.getRecommend(count, pager, c);
+    }
+
+    @Override
+    public void getWelfare(int count, int pager, CallBack<Welfare> c) {
+        mApi.getWelfare(count, pager, c);
     }
 
 }

@@ -22,8 +22,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.ClickActivity" />
-        <activity android:name=".ui.WelfareActivity" />
-        <activity android:name=".ui.AllActivity"></activity>
+
+        <activity android:name=".ui.WelfareActivity" >
+
+        </activity>
+        <activity android:name=".ui.AllActivity">
+
+        </activity>
     </application>
 
 </manifest>

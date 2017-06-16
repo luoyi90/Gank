@@ -36,8 +36,8 @@ public class Welfare {
         this.results = results;
     }
 
-    public static class ResultsBean {
-        /**
+    /*public static class ResultsBean {
+        *//**
          * _id : 591a4a02421aa92c794632c8
          * createdAt : 2017-05-16T08:38:26.35Z
          * desc : 5-16
@@ -47,7 +47,7 @@ public class Welfare {
          * url : http://ww1.sinaimg.cn/large/610dc034ly1ffmwnrkv1hj20ku0q1wfu.jpg
          * used : true
          * who : daimajai
-         */
+         *//*
 
         private String _id;
         private String createdAt;
@@ -130,5 +130,5 @@ public class Welfare {
         public void setWho(String who) {
             this.who = who;
         }
-    }
+    }*/
 }

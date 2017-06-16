@@ -7,6 +7,7 @@ import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
 import com.luo.demo.gankio.bean.Video;
+import com.luo.demo.gankio.bean.Welfare;
 
 /**
  * Project: Gankio
@@ -32,4 +33,6 @@ interface IApi {
     void getApp(int count, int pager, CallBack<App> c);
 
     void getRecommend(int count, int pager, CallBack<Recommend> c);
+
+    void getWelfare(int count, int pager, CallBack<Welfare> c);
 }

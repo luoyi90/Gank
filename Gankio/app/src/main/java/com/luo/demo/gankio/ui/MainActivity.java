@@ -144,8 +144,6 @@ public class MainActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
                         switch (menuItem.getItemId()) {
                             case R.id.nav_welfare:
                                 startActivity(new Intent(MainActivity.this, WelfareActivity.class));
@@ -155,7 +153,6 @@ public class MainActivity extends BaseActivity {
                                 startActivity(new Intent(MainActivity.this, AllActivity.class));
                                 break;
                         }
-
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
                         return true;
