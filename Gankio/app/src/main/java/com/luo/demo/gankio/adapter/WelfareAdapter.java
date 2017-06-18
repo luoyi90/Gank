@@ -41,9 +41,18 @@ public class WelfareAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        ViewGroup.LayoutParams params = ((WelfareHolder) holder).mImageView.getLayoutParams();
+        if (position % 2 == 0) {
+            params.height = 700;
+        } else {
+            params.height = 500;
+        }
+        ((WelfareHolder) holder).mImageView.setLayoutParams(params);
+
         Glide.with(mContext)
                 .load(mDatas.get(position).getUrl())
-                .fitCenter()
+                .centerCrop()
                 .into(((WelfareHolder) holder).mImageView);
     }
 

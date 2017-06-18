@@ -10,16 +10,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.DesignDemo">
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.DetailActivity" />
-        <activity android:name=".ui.TestActivity" />
-        <activity android:name=".ui.SplashActivity">
+        <activity android:name=".ui.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.DetailActivity" />
+        <activity android:name=".ui.TestActivity" />
+        <activity android:name=".ui.SplashActivity">
+
         </activity>
         <activity android:name=".ui.ClickActivity" />
 
