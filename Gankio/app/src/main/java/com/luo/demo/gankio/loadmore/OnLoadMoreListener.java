@@ -1,7 +1,5 @@
 package com.luo.demo.gankio.loadmore;
 
-import java.util.List;
-
 /**
  * Project: Gankio
  * Author：Mr.Luo
@@ -15,7 +13,7 @@ public interface OnLoadMoreListener<T> {
     /**
      * 加载更多前回调，比如显示Footer的操作
      */
-    void onStart();
+    void onPrepare();
 
     /**
      * 加载更多业务处理，如网络请求数据
@@ -27,5 +25,5 @@ public interface OnLoadMoreListener<T> {
      *
      * @param list onLoadMore中返回的数据
      */
-    void onFinish(List<T> list);
+    //void onFinish(List<T> list);
 }

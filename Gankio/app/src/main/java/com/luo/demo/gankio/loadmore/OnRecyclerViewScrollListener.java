@@ -86,7 +86,7 @@ public abstract class OnRecyclerViewScrollListener<T> extends RecyclerView.OnScr
                 && lastVisibleItemPosition >= totalItemCount - 1) {
             if (!isLoadingMore()) {
                 mIsLoadingMore = true;
-                onStart();
+                onPrepare();
                 onLoadMore();
             }
         }
