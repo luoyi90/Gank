@@ -15,15 +15,16 @@
         <activity android:name=".ui.DetailActivity"/>
         <activity android:name=".ui.TestActivity"/>
         <activity android:name=".ui.SplashActivity">
-        </activity>
-        <activity android:name=".ui.ClickActivity"/>
-        <activity android:name=".ui.WelfareActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.ClickActivity"/>
+        <activity android:name=".ui.WelfareActivity">
+
         </activity>
         <activity android:name=".ui.AllActivity">
         </activity>

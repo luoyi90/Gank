@@ -1,7 +1,10 @@
 package com.luo.demo.gankio.loadmore;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -128,7 +131,11 @@ public class LoadMoreRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, PictureActivity.class);
                     i.putExtra(PictureActivity.PIC_URL, mDatas.get(position).getUrl());
-                    mContext.startActivity(i);
+
+                    Bundle optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            (Activity) mContext, ((ContentHolder) holder).mImageView, "iv").toBundle();
+
+                    mContext.startActivity(i, optionsCompat);
                 }
             });
         }

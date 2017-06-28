@@ -8,6 +8,7 @@
                                     app:cardCornerRadius="5dp">
 
     <ImageView
+        android:transitionName="iv"
         android:id="@+id/welfare_item_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
