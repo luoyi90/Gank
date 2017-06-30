@@ -28,7 +28,6 @@ public class WelfareActivity extends BaseActivity implements LoadMoreRvAdapter.O
     private LoadMoreRvAdapter mAdapter;
     private OnRecyclerViewScrollListener<ResultsBean> mListener;
 
-    private int index = 0;
     private int mCurrentPage;
     private int mPageCount;
 
