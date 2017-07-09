@@ -46,6 +46,10 @@ public class LoadMoreRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         mDatas.addAll(datas);
     }
 
+    public void setDatas(List<ResultsBean> datas) {
+        mDatas = datas;
+    }
+
     public interface OnErrorClickListener{
         void onReload();
     }
@@ -164,6 +168,29 @@ public class LoadMoreRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
+        if (isStaggeredGridLayout(holder)) {
+            handleLayoutIfStaggeredGridLayout(holder, holder.getLayoutPosition());
+        }
+    }
+
+    private boolean isStaggeredGridLayout(RecyclerView.ViewHolder holder) {
+        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+        if (layoutParams != null && layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+            return true;
+        }
+        return false;
+    }
+
+    private void handleLayoutIfStaggeredGridLayout(RecyclerView.ViewHolder holder, int position) {
+        if (position == mDatas.size()) {
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+            p.setFullSpan(true);
+        }
+    }
+
+    /*@Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
         int position = holder.getLayoutPosition();
         if (isFooterViewPos(position)) {
             ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
@@ -172,7 +199,7 @@ public class LoadMoreRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 p.setFullSpan(true);
             }
         }
-    }
+    }*/
 
     /*@Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
