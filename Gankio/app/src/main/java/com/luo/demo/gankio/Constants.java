@@ -20,6 +20,7 @@ public interface Constants {
     String VIDEO     = "http://gank.io/api/data/休息视频/";
     String ALL     = "http://gank.io/api/data/all/";
     String WELFARE     = "http://gank.io/api/data/福利/";
+    String HISTORY     = "http://gank.io/api/history/content/";
 
 
     // 干货API分类数据基本地址

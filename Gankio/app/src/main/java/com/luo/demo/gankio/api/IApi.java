@@ -3,6 +3,7 @@ package com.luo.demo.gankio.api;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.App;
 import com.luo.demo.gankio.bean.Expand;
+import com.luo.demo.gankio.bean.History;
 import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
@@ -35,4 +36,7 @@ interface IApi {
     void getRecommend(int count, int pager, CallBack<Recommend> c);
 
     void getWelfare(int count, int pager, CallBack<Welfare> c);
+
+    void getHistory(int count, int pager, CallBack<History> c);
+
 }

@@ -3,6 +3,7 @@ package com.luo.demo.gankio.api;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.App;
 import com.luo.demo.gankio.bean.Expand;
+import com.luo.demo.gankio.bean.History;
 import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
@@ -74,6 +75,11 @@ public class Api implements IApi {
     @Override
     public void getWelfare(int count, int pager, CallBack<Welfare> c) {
         mApi.getWelfare(count, pager, c);
+    }
+
+    @Override
+    public void getHistory(int count, int pager, CallBack<History> c) {
+        mApi.getHistory(count, pager, c);
     }
 
 }

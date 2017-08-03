@@ -7,6 +7,7 @@ import com.luo.demo.gankio.Constants;
 import com.luo.demo.gankio.bean.Android;
 import com.luo.demo.gankio.bean.App;
 import com.luo.demo.gankio.bean.Expand;
+import com.luo.demo.gankio.bean.History;
 import com.luo.demo.gankio.bean.IOS;
 import com.luo.demo.gankio.bean.JS;
 import com.luo.demo.gankio.bean.Recommend;
@@ -197,6 +198,27 @@ class ApiOkHttp implements IApi {
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
                 String str = response.body().string();
                 Welfare bean = new Gson().fromJson(str, Welfare.class);
+                c.onFinish(true, bean, str);
+            }
+        });
+    }
+
+    @Override
+    public void getHistory(int count, int pager, final CallBack<History> c) {
+        Request.Builder requestBuilder = new Request.Builder().url(Constants.HISTORY + count + "/" + pager);
+        Request request = requestBuilder.build();
+        Call mCall = mOkHttpClient.newCall(request);
+
+        mCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                c.onFinish(false, null, e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
+                String str = response.body().string();
+                History bean = new Gson().fromJson(str, History.class);
                 c.onFinish(true, bean, str);
             }
         });
