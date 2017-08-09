@@ -186,12 +186,24 @@ public final class TimeUtils {
      */
     private final static String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     private static SimpleDateFormat mDateFormat = new SimpleDateFormat(DATE_FORMAT);
+    private static SimpleDateFormat mDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String getFormatDate(String date) {
         String str = "";
         try {
             Date date2 = mDateFormat.parse(date);
             str = DEFAULT_FORMAT.format(date2.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static String getFormatDate2(String date) {
+        String str = "";
+        try {
+            Date date2 = mDateFormat.parse(date);
+            str = mDateFormat2.format(date2.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }

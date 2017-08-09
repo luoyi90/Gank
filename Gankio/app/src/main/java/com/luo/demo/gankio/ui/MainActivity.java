@@ -145,6 +145,10 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
+                            case R.id.nav_everyday:
+                                startActivity(new Intent(MainActivity.this, EveryDayActivity.class));
+                                break;
+
                             case R.id.nav_welfare:
                                 startActivity(new Intent(MainActivity.this, WelfareActivity.class));
                                 break;

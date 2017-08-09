@@ -1,22 +1,32 @@
 package com.luo.demo.gankio.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.luo.demo.gankio.R;
+import com.luo.demo.gankio.adapter.EDAdapter;
 import com.luo.demo.gankio.api.Api;
 import com.luo.demo.gankio.api.CallBack;
 import com.luo.demo.gankio.base.BaseActivity;
+import com.luo.demo.gankio.bean.EveryDay;
 import com.luo.demo.gankio.bean.History;
+import com.luo.demo.gankio.util.TimeUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EveryDayActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+
+    private RecyclerView mRecyclerView;
+    private EDAdapter mEdAdapter;
+    private Handler mHandler = new Handler();
+    private SwipeRefreshLayout mRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +59,18 @@ public class EveryDayActivity extends BaseActivity implements SwipeRefreshLayout
                         ed = new EveryDay();
                         ed.setImg(img);
                         ed.setB(b.getResults().get(i));
+
+                        KLog.d(b.getResults().get(i).getCreated_at());
+                        KLog.d(TimeUtils.getFormatDate(b.getResults().get(i).getCreated_at()));
                         mData.add(ed);
                     }
-
-                    for (int i = 0; i < mData.size(); i++) {
-                        KLog.d(mData.get(i).getImg());
-                        KLog.d(mData.get(i).getB().getTitle());
-                    }
-
+                    mEdAdapter = new EDAdapter(EveryDayActivity.this, mData);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mRecyclerView.setAdapter(mEdAdapter);
+                        }
+                    });
                 }
             }
         });
@@ -64,11 +78,16 @@ public class EveryDayActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
     }
 
     private void initView() {
-        SwipeRefreshLayout mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.ed_swip);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.ed_swip);
         mRefreshLayout.setColorSchemeResources(R.color.red, R.color.blue, R.color.green);
         mRefreshLayout.setOnRefreshListener(this);
 
@@ -78,29 +97,10 @@ public class EveryDayActivity extends BaseActivity implements SwipeRefreshLayout
         getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.ed_rv);
-    }
-
-    private class EveryDay {
-
-        private String img;
-        private History.ResultsBean b;
-
-        public History.ResultsBean getB() {
-            return b;
-        }
-
-        public void setB(History.ResultsBean b) {
-            this.b = b;
-        }
-
-        public String getImg() {
-            return img;
-        }
-
-        public void setImg(String img) {
-            this.img = img;
-        }
+        mRecyclerView = (RecyclerView) findViewById(R.id.ed_rv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
