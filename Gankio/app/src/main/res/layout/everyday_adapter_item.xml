@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ed_item_content"
     android:layout_width="match_parent"
     android:layout_height="110dp"
     android:layout_margin="5dp"
+    android:foreground="@drawable/card_foreground"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -49,8 +51,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/green"
-                        android:text="Android"
                         android:padding="2dp"
+                        android:text="Android"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
@@ -59,8 +61,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@color/royalblue"
-                        android:text="IOS"
                         android:padding="2dp"
+                        android:text="IOS"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
 
@@ -69,8 +71,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@color/orangered"
-                        android:text="前端"
                         android:padding="2dp"
+                        android:text="前端"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>

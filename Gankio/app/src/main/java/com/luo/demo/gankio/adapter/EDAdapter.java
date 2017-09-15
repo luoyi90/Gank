@@ -1,6 +1,8 @@
 package com.luo.demo.gankio.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.luo.demo.gankio.R;
 import com.luo.demo.gankio.bean.EveryDay;
+import com.luo.demo.gankio.ui.EdDetailActivity;
 import com.luo.demo.gankio.util.TimeUtils;
 
 import java.util.List;
@@ -40,11 +43,20 @@ public class EDAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Glide.with(mContext).load(mDatas.get(position).getImg()).centerCrop().into(((EDHolder) holder).mImageView);
         ((EDHolder) holder).mTvTitle.setText(mDatas.get(position).getB().getTitle());
         // ((EDHolder) holder).mTvDate.setText(mDatas.get(position).getB().getCreated_at());
         ((EDHolder) holder).mTvDate.setText(TimeUtils.getFormatDate2(mDatas.get(position).getB().getCreated_at()));
+
+        ((EDHolder) holder).mContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EdDetailActivity.class);
+                intent.putExtra(EdDetailActivity.EDTAIL_KEY, mDatas.get(position).getB().getContent());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -58,9 +70,11 @@ public class EDAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView mImageView;
         TextView mTvTitle;
         TextView mTvDate;
+        CardView mContent;
 
         EDHolder(View view) {
             super(view);
+            mContent = (CardView) view.findViewById(R.id.ed_item_content);
             mImageView = (ImageView) view.findViewById(R.id.ed_item_image);
             mTvTitle = (TextView) view.findViewById(R.id.ed_item_title);
             mTvDate = (TextView) view.findViewById(R.id.ed_item_date);
